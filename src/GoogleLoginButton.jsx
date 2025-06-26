@@ -11,7 +11,7 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
       try {
         console.log("Authorization Code received:", code);
         // console.log("redirection url ------> ",redirect_uri)
-        const res = await axios.post('http://localhost:8000/exchange', { code });
+        const res = await axios.post('https://ddcb-110-227-212-212.ngrok-free.app/exchange', { code });
         console.log("User info:", res.data);
         onLoginSuccess(res.data); // { id, email }
         alert("Login successful! You can now send emails.");
