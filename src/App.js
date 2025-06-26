@@ -34,9 +34,10 @@ function App() {
                   });
 
                   const result = await response.json();
-
+                  console.log("Response from server:", result);
+                  console.log("Email received from backend:", result.email);
                   if (response.ok) {
-                    alert(`📤 Mail sent to ${user.email} successfully!`);
+                    alert(`📤 Mail sent to ${result.email} successfully!`);
                   } else {
                     alert(`❌ Failed to send mail: ${result.error || 'Unknown error'}`);
                   }
