@@ -23,7 +23,7 @@ function App() {
              <p>Logged in as: {user.email}</p>
             {/* <h2>Welcome, {user.id}</h2> */}
             <button onClick={async () => {
-                await fetch('http://localhost:8000/send', {
+                await fetch('https://flask-test-app-oumd.onrender.com/send', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
