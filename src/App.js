@@ -14,7 +14,7 @@ function App() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="76239772933-juuv43kbl0l7ioq97gq65oj3ujlds1rp.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId="223161771777-1ji9dj4v6jguma0s780iqadgia1fqc4c.apps.googleusercontent.com">
       <div>
         {!user ? (
           <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
