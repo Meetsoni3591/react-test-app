@@ -22,16 +22,31 @@ function App() {
           <div>
              <p>Logged in as: {user.email}</p>
             {/* <h2>Welcome, {user.id}</h2> */}
-            <button onClick={async () => {
-                await fetch('https://flask-test-app-oumd.onrender.com/send', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ user_id: user.id, email: user.email })
-                });
-            }}>
-              Send Mail 
+            <button
+              onClick={async () => {
+                try {
+                  const response = await fetch('https://flask-test-app-oumd.onrender.com/send', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_id: user.id, email: user.email }),
+                  });
+
+                  const result = await response.json();
+
+                  if (response.ok) {
+                    alert(`📤 Mail sent to ${user.email} successfully!`);
+                  } else {
+                    alert(`❌ Failed to send mail: ${result.error || 'Unknown error'}`);
+                  }
+                } catch (error) {
+                  console.error("Fetch error:", error);
+                  alert("❌ An error occurred while sending the mail.");
+                }
+              }}
+            >
+              Send Mail
             </button>
             <br />
             <br />
