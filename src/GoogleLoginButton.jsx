@@ -14,8 +14,8 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
         console.log("Authorization Code received:", code);
         // console.log("redirection url ------> ",redirect_uri)
         const res = await axios.post('https://flask-test-app-oumd.onrender.com/exchange', { code });
-        if (res.data.error?.includes("Scope has changed")) {
-          alert("❌ Please allow Gmail send access. Try logging in again and check the box.");
+        if (res.data.error) {
+          alert(`❌ ${res.data.error}\n${res.data.details || ''}`);
           return;
         }else {
         console.log("User info:", res.data);
