@@ -21,7 +21,7 @@ const SendEmailButton = ({ emails, userId }) => {
       alert("✅ Emails sent successfully!");
       console.log("Server response:", res.data);
     } catch (err) {
-      alert("❌ Failed to send emails.");
+      alert("❌ Failed to send emails.",err.response?.data || err.message);
       console.error(err.response?.data || err.message);
     } finally {
       setLoading(false);
