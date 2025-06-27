@@ -15,7 +15,7 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
         // console.log("redirection url ------> ",redirect_uri)
         const res = await axios.post('https://flask-test-app-oumd.onrender.com/exchange', { code });
         if (res.data.error) {
-          alert(`❌ ${res.data.error}\n${res.data.details || ''}`);
+          alert(`❌first ${res.data.error}\n second${res.data.details || ''}`);
           return;
         }else {
         console.log("User info:", res.data);
