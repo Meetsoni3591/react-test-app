@@ -5,7 +5,7 @@ import axios from 'axios';
 const GoogleLoginButton = ({ onLoginSuccess }) => {
   const login = useGoogleLogin({
     flow: 'auth-code',
-    scope: 'https://www.googleapis.com/auth/gmail.send openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+    scope: 'https://www.googleapis.com/auth/gmail.send',
     access_type: 'offline',
     prompt: 'consent', // forces re-consent screen every time
     redirect_uri: 'postmessage',  // 👈 this is the key// must match Google Cloud Console
