@@ -5,16 +5,22 @@ import axios from 'axios';
 const GoogleLoginButton = ({ onLoginSuccess }) => {
   const login = useGoogleLogin({
     flow: 'auth-code',
-    scope: 'https://www.googleapis.com/auth/gmail.send',
+    scope: 'https://www.googleapis.com/auth/gmail.send openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile',
+    access_type: 'offline',
+    prompt: 'consent', // forces re-consent screen every time
     redirect_uri: 'postmessage',  // 👈 this is the key// must match Google Cloud Console
     onSuccess: async ({ code }) => {
       try {
         console.log("Authorization Code received:", code);
         // console.log("redirection url ------> ",redirect_uri)
         const res = await axios.post('https://flask-test-app-oumd.onrender.com/exchange', { code });
+        if(res.data.error) {
+          alert("❌ Permission required to send email. Please allow Gmail access.")
+        }else {
         console.log("User info:", res.data);
         onLoginSuccess(res.data); // { id, email }
         alert("Login successful! You can now send emails.");
+        }
       } catch (err) {
         alert("Login failed.");
         console.error("Exchange Error:", err.response?.data || err.message);

@@ -53,6 +53,8 @@ function App() {
             <br />
             <button onClick={() => {
               localStorage.removeItem('gmail_user');
+              localStorage.clear(); // or clear tokens
+              window.location.reload(); // reset session
               setUser(null);
             }}>
               Logout
