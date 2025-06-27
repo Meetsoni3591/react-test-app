@@ -15,7 +15,7 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
         // console.log("redirection url ------> ",redirect_uri)
         const res = await axios.post('https://flask-test-app-oumd.onrender.com/exchange', { code });
         if (res.data.error) {
-          alert(`❌first ${res.data.error}\n second${res.data.details || ''}`);
+          alert(` ${res.data.error}\n Please try again. you didn't give permission to send emails.`);
           return;
         }else {
         console.log("User info:", res.data);
