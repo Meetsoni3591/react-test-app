@@ -63,7 +63,7 @@ function App() {
             {/* <p>upload your excel file </p> */}
            
             <div>
-              <h2>Gmail Bulk Sender</h2>
+              {/* <h2>Gmail Bulk Sender</h2> */}
               <ExcelUploader onEmailsExtracted={handleEmailsExtracted} />
 
               {emailList.length > 0 && (
@@ -74,9 +74,10 @@ function App() {
                       <li key={index}>{email}</li>
                     ))}
                   </ul>
+                  <SendEmailButton emails={emailList} userId={user.id} />
                 </div>
               )}
-              <SendEmailButton emails={emailList} userId={user.id} />
+              
             </div>
 
 
