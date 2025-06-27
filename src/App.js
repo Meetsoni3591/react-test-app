@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import GoogleLoginButton from './GoogleLoginButton';
+import ExcelUploader from './ExcelUploader';
+import SendEmailButton from './SendEmailButton';
 
 function App() {
+  const [emailList, setEmailList] = useState([]);
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('gmail_user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
+  const handleEmailsExtracted = (emails) => {
+    console.log("📧 Extracted Emails:", emails);
+    setEmailList(emails);
+  };
   const handleLoginSuccess = (data) => {
     setUser(data);
     localStorage.setItem('gmail_user', JSON.stringify(data));
@@ -16,13 +23,15 @@ function App() {
   return (
     <GoogleOAuthProvider clientId="223161771777-1ji9dj4v6jguma0s780iqadgia1fqc4c.apps.googleusercontent.com">
       <div>
+        <h1>Gmail Send Mail App</h1>
         {!user ? (
           <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
         ) : (
           <div>
              <p>Logged in as: {user.email}</p>
             {/* <h2>Welcome, {user.id}</h2> */}
-            <button
+            {/* test mail button  */}
+            {/* <button
               onClick={async () => {
                 try {
                   const response = await fetch('https://flask-test-app-oumd.onrender.com/send', {
@@ -48,9 +57,30 @@ function App() {
               }}
             >
               Send Mail
-            </button>
-            <br />
-            <br />
+            </button> */}
+            {/* <br /> */}
+            {/* <br /> */}
+            {/* <p>upload your excel file </p> */}
+           
+            <div>
+              <h2>Gmail Bulk Sender</h2>
+              <ExcelUploader onEmailsExtracted={handleEmailsExtracted} />
+
+              {emailList.length > 0 && (
+                <div>
+                  <h3>Emails to be sent:</h3>
+                  <ul>
+                    {emailList.map((email, index) => (
+                      <li key={index}>{email}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <SendEmailButton emails={emailList} userId={user.id} />
+            </div>
+
+
+
             <button onClick={() => {
               localStorage.removeItem('gmail_user');
               localStorage.clear(); // or clear tokens
@@ -63,6 +93,7 @@ function App() {
         )}
       </div>
     </GoogleOAuthProvider>
+
   );
 }
 
