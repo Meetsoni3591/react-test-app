@@ -94,10 +94,33 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                 </tr>
               </thead>
               <tbody>
-                {excelData.map((row, index) => (
-                  <tr key={index}>
+                {excelData.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
                     {Object.keys(excelData[0]).map((key) => (
-                      <td key={key}>{row[key]}</td>
+                      <td key={key}>
+                        {(key.toLowerCase().includes("email")) ? (
+                          <input
+                            type="email"
+                            value={row[key] || ""}
+                            onChange={e => {
+                              const newValue = e.target.value;
+                              setExcelData(prevData => {
+                                const updated = [...prevData];
+                                updated[rowIndex] = { ...updated[rowIndex], [key]: newValue };
+                                // Update emails after change
+                                const extractedEmails = updated
+                                  .map(r => r.Email || r.email || r["Post contact Email"])
+                                  .filter(email => typeof email === "string" && email.includes("@"));
+                                onEmailsExtracted(extractedEmails);
+                                return updated;
+                              });
+                            }}
+                            style={{ width: "100%" }}
+                          />
+                        ) : (
+                          row[key]
+                        )}
+                      </td>
                     ))}
                   </tr>
                 ))}
