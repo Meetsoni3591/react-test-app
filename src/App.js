@@ -23,8 +23,46 @@ function App() {
     setUser(data);
     localStorage.setItem('gmail_user', JSON.stringify(data));
   };
+  async function checkCookie() {
+      const liat = document.getElementById("liat").value;
+      const res = await fetch("https://linkedin-cookiee-checker-1.onrender.com/check-liat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ li_at: liat })
+      });
+      const data = await res.json();
+      document.getElementById("cookie-result").textContent = data.message || data.error;
+    }
+
+  async function scrapePosts() {
+        const liat = document.getElementById("liat").value;
+        const keyword = document.getElementById("keyword").value;
+        const result = document.getElementById("scrape-result");
+        const list = document.getElementById("posts");
+        list.innerHTML = "";
+        result.textContent = "Scraping...";
+
+        const res = await fetch("https://linkedin-cookiee-checker-1.onrender.com/scrape-posts", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ li_at: liat, keyword: keyword })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          result.textContent = "Scraped Posts:";
+          data.posts.forEach(post => {
+            const li = document.createElement("li");
+            li.textContent = post.text;
+            list.appendChild(li);
+          });
+        } else {
+          result.textContent = `❌ ${data.error}`;
+        }
+      }
 
   return (
+    
     <GoogleOAuthProvider clientId="223161771777-1ji9dj4v6jguma0s780iqadgia1fqc4c.apps.googleusercontent.com">
       <div>
         <h1>Send Mail App</h1>
@@ -88,7 +126,21 @@ function App() {
               )}
               
             </div>
+            <div>
+              <h2>LinkedIn Cookie Validator & Post Scraper</h2>
+              <label>li_at Cookie:</label><br>
+              </br>
+              <input type="text" id="liat" placeholder="Paste li_at cookie" size="80"/><br />
+              <button onclick="checkCookie()">Check Cookie</button>
+              <p id="cookie-result"></p>
 
+              <hr />
+              <label>Search Keyword:</label><br />
+              <input type="text" id="keyword" placeholder="e.g. AI, startup, hiring" size="50" />
+              <button onclick="scrapePosts()">Scrape Posts</button>
+              <p id="scrape-result"></p>
+              <ul id="posts"></ul>
+            </div>
 
 
             <button onClick={() => {
@@ -102,6 +154,7 @@ function App() {
           </div>
         )}
       </div>
+      
     </GoogleOAuthProvider>
 
   );
