@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const SendEmailButton = ({ emails, userId }) => {
+const SendEmailButton = ({ emails, userId, disabled }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSendEmails = async () => {
+    if (disabled) return;
     if (!userId || emails.length === 0) {
       alert("Missing user or email list.");
       return;
@@ -30,7 +31,7 @@ const SendEmailButton = ({ emails, userId }) => {
 
   return (
     <div style={{ marginTop: "20px" }}>
-      <button onClick={handleSendEmails} disabled={loading}>
+      <button onClick={handleSendEmails} disabled={loading || disabled}>
         {loading ? "Sending Emails..." : `Send Email to ${emails.length} Recipients`}
       </button>
     </div>
