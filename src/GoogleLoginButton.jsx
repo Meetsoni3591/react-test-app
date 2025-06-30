@@ -20,7 +20,7 @@ const GoogleLoginButton = ({ onLoginSuccess }) => {
         }else {
         console.log("User info:", res.data);
         onLoginSuccess(res.data); // { id, email }
-        alert("Login successful! You can now send emails.");
+        alert("Login successful! You can now proced ");
         }
       } catch (err) {
         alert("Login failed.");
