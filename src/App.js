@@ -27,7 +27,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId="223161771777-1ji9dj4v6jguma0s780iqadgia1fqc4c.apps.googleusercontent.com">
       <div>
-        <h1>Gmail Send Mail App</h1>
+        <h1>Send Mail App</h1>
         {!user ? (
           <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
         ) : (
