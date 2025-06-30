@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
+const EMAIL_REGEX = /^[\w.-]+@[\w.-]+\.\w+$/;
 const ExcelUploader = ({ onEmailsExtracted }) => {
   const [excelData, setExcelData] = useState([]);
   const [filename, setFilename] = useState("");
@@ -65,12 +66,26 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
               return;
             }
 
+            // Validate emails in uploaded file
+            const invalidRows = parsedData.filter(
+              (row) => {
+                const email = row.Email || row.email || row["Post contact Email"];
+                return email && !EMAIL_REGEX.test(email);
+              }
+            );
+            if (invalidRows.length > 0) {
+              alert("The uploaded file contains invalid email addresses. Please correct them before uploading.");
+              setExcelData([]);
+              onEmailsExtracted([]);
+              return;
+            }
+
             setExcelData(parsedData);
 
-            // Extract email column values
+            // Extract valid emails
             const extractedEmails = parsedData
               .map((row) => row.Email || row.email || row["Post contact Email"])
-              .filter((email) => typeof email === "string" && email.includes("@"));
+              .filter((email) => typeof email === "string" && EMAIL_REGEX.test(email));
 
             // Send emails to parent
             onEmailsExtracted(extractedEmails);
@@ -120,13 +135,18 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                             value={row[key] || ""}
                             onChange={e => {
                               const newValue = e.target.value;
+                              // Validate email before updating
+                              if (newValue && !EMAIL_REGEX.test(newValue)) {
+                                alert("Please enter a valid email address.");
+                                return;
+                              }
                               setExcelData(prevData => {
                                 const updated = [...prevData];
                                 updated[rowIndex] = { ...updated[rowIndex], [key]: newValue };
                                 // Update emails after change
                                 const extractedEmails = updated
                                   .map(r => r.Email || r.email || r["Post contact Email"])
-                                  .filter(email => typeof email === "string" && email.includes("@"));
+                                  .filter(email => typeof email === "string" && EMAIL_REGEX.test(email));
                                 onEmailsExtracted(extractedEmails);
                                 return updated;
                               });
