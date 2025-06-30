@@ -63,6 +63,9 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
           </div>
         </div>
       )}
+      {excelData.length === 0 && (
+        <p style={{ color: "red" }}>❌ No valid email data found in the uploaded file.</p>  
+      )}
     </div>
   );
 };
