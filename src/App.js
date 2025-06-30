@@ -6,6 +6,7 @@ import SendEmailButton from './SendEmailButton';
 
 function App() {
   const [emailList, setEmailList] = useState([]);
+  const [invalidEmails, setInvalidEmails] = useState([]);
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('gmail_user');
     return storedUser ? JSON.parse(storedUser) : null;
@@ -14,6 +15,9 @@ function App() {
   const handleEmailsExtracted = (emails) => {
     console.log("📧 Extracted Emails:", emails);
     setEmailList(emails);
+  };
+  const handleInvalidEmails = (invalids) => {
+    setInvalidEmails(invalids);
   };
   const handleLoginSuccess = (data) => {
     setUser(data);
@@ -64,7 +68,7 @@ function App() {
            
             <div>
               {/* <h2>Gmail Bulk Sender</h2> */}
-              <ExcelUploader onEmailsExtracted={handleEmailsExtracted} />
+              <ExcelUploader onEmailsExtracted={handleEmailsExtracted} onInvalidEmails={handleInvalidEmails} />
 
               {emailList.length > 0 && (
                 <div>
@@ -74,7 +78,12 @@ function App() {
                       <li key={index}>{email}</li>
                     ))}
                   </ul>
-                  <SendEmailButton emails={emailList} userId={user.id} />
+                  <SendEmailButton emails={emailList} userId={user.id} disabled={invalidEmails.length > 0} />
+                  {invalidEmails.length > 0 && (
+                    <div style={{ color: '#b30000', marginTop: 10 }}>
+                      <strong>Cannot send emails while there are invalid email addresses above.</strong>
+                    </div>
+                  )}
                 </div>
               )}
               
