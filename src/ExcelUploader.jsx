@@ -84,8 +84,8 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
       {excelData.length > 0 && (
         <div style={{ marginTop: "20px" }}>
           <h4>📄 Excel File Preview:</h4>
-          <div style={{ overflowX: "auto" }}>
-            <table border="1" cellPadding="6" style={{ borderCollapse: "collapse", width: "100%" }}>
+          <div>
+            <table border="1" cellPadding="6" style={{ borderCollapse: "collapse", width: "100%",tableLayout: "fixed" }}>
               <thead>
                 <tr>
                   {Object.keys(excelData[0]).map((key) => (
@@ -93,8 +93,8 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                       key={key}
                       style={
                         key.toLowerCase().includes("email")
-                          ? { width: "220px", minWidth: "180px" }
-                          : { width: "120px", maxWidth: "200px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
+                          ? { width: "180px", minWidth: "120px" }
+                          : { width: "100px", maxWidth: "140px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
                       }
                     >
                       {key}
@@ -110,8 +110,8 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                         key={key}
                         style={
                           key.toLowerCase().includes("email")
-                            ? { width: "220px", minWidth: "180px" }
-                            : { width: "120px", maxWidth: "200px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
+                            ? { width: "180px", minWidth: "120px" }
+                            : { width: "100px", maxWidth: "140px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
                         }
                       >
                         {(key.toLowerCase().includes("email")) ? (
