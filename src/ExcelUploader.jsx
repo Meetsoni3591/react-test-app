@@ -89,7 +89,16 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
               <thead>
                 <tr>
                   {Object.keys(excelData[0]).map((key) => (
-                    <th key={key}>{key}</th>
+                    <th
+                      key={key}
+                      style={
+                        key.toLowerCase().includes("email")
+                          ? { width: "220px", minWidth: "180px" }
+                          : { width: "120px", maxWidth: "200px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
+                      }
+                    >
+                      {key}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -97,7 +106,14 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                 {excelData.map((row, rowIndex) => (
                   <tr key={rowIndex}>
                     {Object.keys(excelData[0]).map((key) => (
-                      <td key={key}>
+                      <td
+                        key={key}
+                        style={
+                          key.toLowerCase().includes("email")
+                            ? { width: "220px", minWidth: "180px" }
+                            : { width: "120px", maxWidth: "200px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }
+                        }
+                      >
                         {(key.toLowerCase().includes("email")) ? (
                           <input
                             type="email"
