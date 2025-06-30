@@ -2,35 +2,12 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
 const EMAIL_REGEX = /^[\w.-]+@[\w.-]+\.\w+$/;
-const ExcelUploader = ({ onEmailsExtracted }) => {
+const IGNORE_EMAILS = ["none", "n/a", "nan"];
+
+const ExcelUploader = ({ onEmailsExtracted, onInvalidEmails }) => {
   const [excelData, setExcelData] = useState([]);
   const [filename, setFilename] = useState("");
-
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    setFilename(file.name);
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
-      const sheet = workbook.Sheets[workbook.SheetNames[0]];
-      const parsedData = XLSX.utils.sheet_to_json(sheet);
-
-      setExcelData(parsedData);
-
-      // Extract email column values
-      const extractedEmails = parsedData
-        .map((row) => row.Email || row.email || row["Post contact Email"])
-        .filter((email) => typeof email === "string" && email.includes("@"));
-
-      // Send emails to parent
-      onEmailsExtracted(extractedEmails);
-    };
-    reader.readAsArrayBuffer(file);
-  };
+  const [invalidEmails, setInvalidEmails] = useState([]);
 
   return (
     <div style={{ margin: "20px 0" }}>
@@ -46,7 +23,9 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
             alert("The uploaded file is empty.");
             setFilename("");
             setExcelData([]);
+            setInvalidEmails([]);
             onEmailsExtracted([]);
+            if (onInvalidEmails) onInvalidEmails([]);
             return;
           }
 
@@ -62,32 +41,43 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
             if (!parsedData || parsedData.length === 0) {
               alert("The uploaded file is empty.");
               setExcelData([]);
+              setInvalidEmails([]);
               onEmailsExtracted([]);
+              if (onInvalidEmails) onInvalidEmails([]);
               return;
             }
 
-            // Validate emails in uploaded file
-            const invalidRows = parsedData.filter(
-              (row) => {
-                const email = row.Email || row.email || row["Post contact Email"];
-                return email && !EMAIL_REGEX.test(email);
+            // Validate emails in uploaded file and collect invalids with row number
+            const invalids = [];
+            parsedData.forEach((row, idx) => {
+              let email = row.Email || row.email || row["Post contact Email"];
+              if (typeof email === "string") email = email.trim();
+              if (
+                email &&
+                !IGNORE_EMAILS.includes(email.toLowerCase()) &&
+                !EMAIL_REGEX.test(email)
+              ) {
+                invalids.push({ row: idx + 1, email });
               }
-            );
-            if (invalidRows.length > 0) {
-              alert("The uploaded file contains invalid email addresses. Please correct them before uploading.");
-              setExcelData([]);
-              onEmailsExtracted([]);
-              return;
-            }
-
+            });
             setExcelData(parsedData);
+            setInvalidEmails(invalids);
+            if (onInvalidEmails) onInvalidEmails(invalids);
 
-            // Extract valid emails
+            // Extract valid emails (ignore blanks and ignore list)
             const extractedEmails = parsedData
-              .map((row) => row.Email || row.email || row["Post contact Email"])
-              .filter((email) => typeof email === "string" && EMAIL_REGEX.test(email));
-
-            // Send emails to parent
+              .map((row) => {
+                let email = row.Email || row.email || row["Post contact Email"];
+                if (typeof email === "string") email = email.trim();
+                return email;
+              })
+              .filter(
+                (email) =>
+                  typeof email === "string" &&
+                  email &&
+                  !IGNORE_EMAILS.includes(email.toLowerCase()) &&
+                  EMAIL_REGEX.test(email)
+              );
             onEmailsExtracted(extractedEmails);
           };
           reader.readAsArrayBuffer(file);
@@ -100,7 +90,7 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
         <div style={{ marginTop: "20px" }}>
           <h4>📄 Excel File Preview:</h4>
           <div>
-            <table border="1" cellPadding="6" style={{ borderCollapse: "collapse", width: "100%",tableLayout: "fixed" }}>
+            <table border="1" cellPadding="6" style={{ borderCollapse: "collapse", width: "100%", tableLayout: "fixed" }}>
               <thead>
                 <tr>
                   {Object.keys(excelData[0]).map((key) => (
@@ -135,18 +125,38 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
                             value={row[key] || ""}
                             onChange={e => {
                               const newValue = e.target.value;
-                              // Validate email before updating
-                              if (newValue && !EMAIL_REGEX.test(newValue)) {
-                                alert("Please enter a valid email address.");
-                                return;
-                              }
                               setExcelData(prevData => {
                                 const updated = [...prevData];
                                 updated[rowIndex] = { ...updated[rowIndex], [key]: newValue };
-                                // Update emails after change
+                                // Validate all emails after change
+                                const invalids = [];
+                                updated.forEach((r, idx) => {
+                                  let email = r.Email || r.email || r["Post contact Email"];
+                                  if (typeof email === "string") email = email.trim();
+                                  if (
+                                    email &&
+                                    !IGNORE_EMAILS.includes(email.toLowerCase()) &&
+                                    !EMAIL_REGEX.test(email)
+                                  ) {
+                                    invalids.push({ row: idx + 1, email });
+                                  }
+                                });
+                                setInvalidEmails(invalids);
+                                if (onInvalidEmails) onInvalidEmails(invalids);
+                                // Extract valid emails
                                 const extractedEmails = updated
-                                  .map(r => r.Email || r.email || r["Post contact Email"])
-                                  .filter(email => typeof email === "string" && EMAIL_REGEX.test(email));
+                                  .map((r) => {
+                                    let email = r.Email || r.email || r["Post contact Email"];
+                                    if (typeof email === "string") email = email.trim();
+                                    return email;
+                                  })
+                                  .filter(
+                                    (email) =>
+                                      typeof email === "string" &&
+                                      email &&
+                                      !IGNORE_EMAILS.includes(email.toLowerCase()) &&
+                                      EMAIL_REGEX.test(email)
+                                  );
                                 onEmailsExtracted(extractedEmails);
                                 return updated;
                               });
@@ -163,6 +173,17 @@ const ExcelUploader = ({ onEmailsExtracted }) => {
               </tbody>
             </table>
           </div>
+          {invalidEmails.length > 0 && (
+            <div style={{ marginTop: "16px", color: "#b30000", background: "#fff3f3", border: "1px solid #ffcccc", borderRadius: "6px", padding: "12px" }}>
+              <strong>⚠️ Invalid email formats found:</strong>
+              <ul style={{ margin: '8px 0 0 0', paddingLeft: 20 }}>
+                {invalidEmails.map(({ row, email }, idx) => (
+                  <li key={idx}>Row {row}: <code>{email}</code></li>
+                ))}
+              </ul>
+              <div style={{ color: '#555', marginTop: 8 }}>Please correct the invalid email(s) above before sending.</div>
+            </div>
+          )}
         </div>
       )}
     </div>
