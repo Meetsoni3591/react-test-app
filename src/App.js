@@ -131,13 +131,13 @@ function App() {
               <label>li_at Cookie:</label><br>
               </br>
               <input type="text" id="liat" placeholder="Paste li_at cookie" size="80"/><br />
-              <button onclick="checkCookie()">Check Cookie</button>
+              <button onclick={checkCookie()}>Check Cookie</button>
               <p id="cookie-result"></p>
 
               <hr />
               <label>Search Keyword:</label><br />
               <input type="text" id="keyword" placeholder="e.g. AI, startup, hiring" size="50" />
-              <button onclick="scrapePosts()">Scrape Posts</button>
+              <button onclick={scrapePosts()}>Scrape Posts</button>
               <p id="scrape-result"></p>
               <ul id="posts"></ul>
             </div>
