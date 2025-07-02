@@ -90,6 +90,7 @@ function App() {
                 <span className="navbar-logo">
                   <img src={require('./logo.svg').default} alt="Mail Icon" style={{ width: 32, height: 32 }} />
                 </span>
+                
                 <span className="navbar-title">Send Mail App</span>
               </div>
               <div className="navbar-right">
