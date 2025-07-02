@@ -70,7 +70,7 @@ function App() {
             {/* <div className="login-icon">
               <img src={require('./logo.svg').default} alt="Mail Icon" style={{ width: 56, height: 56 }} />
             </div> */}
-            <h2 className="login-title">Send Mail App</h2>
+            <h2 className="login-title">Tecmantras</h2>
             <p className="login-subtitle">Sign in to your account to continue</p>
             <div className="login-btn-wrapper">
               <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
@@ -91,7 +91,7 @@ function App() {
                   <img src={require('./logo.svg').default} alt="Mail Icon" style={{ width: 32, height: 32 }} />
                 </span>
                 
-                <span className="navbar-title">Send Mail App</span>
+                <span className="navbar-title">Tecmantras</span>
               </div>
               <div className="navbar-right">
                 <span className="navbar-user">
