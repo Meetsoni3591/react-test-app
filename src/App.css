@@ -36,3 +36,527 @@
     transform: rotate(360deg);
   }
 }
+
+/* App background */
+.app-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at 80% 10%, #e3eaff 20%, transparent 70%),
+              radial-gradient(circle at 10% 90%, #e3eaff 20%, transparent 70%),
+              linear-gradient(120deg, #f6f8ff 0%, #eaf0ff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Login card */
+.login-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 80, 180, 0.10), 0 1.5px 6px rgba(60, 80, 180, 0.06);
+  padding: 40px 36px 24px 36px;
+  max-width: 370px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.login-icon {
+  background: linear-gradient(135deg, #5b6bff 0%, #8f3fff 100%);
+  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.login-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.login-subtitle {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.login-btn-wrapper {
+  width: 100%;
+  margin-bottom: 18px;
+}
+
+/* Google button (override if needed) */
+.login-btn-wrapper button, .login-btn-wrapper .google-login-btn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 7px;
+  border: 1px solid #e0e0e0;
+  background: #fff;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.15s;
+}
+.login-btn-wrapper button:hover, .login-btn-wrapper .google-login-btn:hover {
+  box-shadow: 0 2px 8px rgba(60, 80, 180, 0.10);
+}
+
+.login-signup {
+  margin-top: 6px;
+  font-size: 0.98rem;
+  color: #555;
+  text-align: center;
+}
+.signup-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+.login-footer {
+  margin-top: 24px;
+  font-size: 0.92rem;
+  color: #8a8a8a;
+  text-align: center;
+}
+
+/* Dashboard background */
+.dashboard-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at 80% 10%, #e3eaff 20%, transparent 70%),
+              radial-gradient(circle at 10% 90%, #e3eaff 20%, transparent 70%),
+              linear-gradient(120deg, #f6f8ff 0%, #eaf0ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
+
+/* Navbar */
+.navbar {
+  width: 100%;
+  height: 60px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(60, 80, 180, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #5b6bff 0%, #8f3fff 100%);
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+}
+.navbar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #222;
+  margin-left: 10px;
+}
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-right: 50px;
+}
+.navbar-user {
+  color: #222;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.navbar-user-icon {
+  font-size: 1.1rem;
+  margin-right: 2px;
+}
+.navbar-logout {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 7px;
+  padding: 7px 60px 7px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: box-shadow 0.15s, border 0.15s;
+}
+.navbar-logout:hover {
+  box-shadow: 0 2px 8px rgba(60, 80, 180, 0.10);
+  border: 1.5px solid #5b6bff;
+}
+
+/* Main card - wider for Excel tables */
+.main-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(60, 80, 180, 0.10), 0 1.5px 6px rgba(60, 80, 180, 0.06);
+  margin-top: 100px;
+  margin-bottom: 40px;
+  max-width: 1500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 32px 0 32px;
+}
+.main-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.main-subtitle {
+  color: #555;
+  font-size: 1.08rem;
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+/* Upload area */
+.upload-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+/* Instructions section */
+.instructions-section {
+  width: 100%;
+  background: #f7f9fd;
+  border-top: 1px solid #e5eaf3;
+  margin-top: 18px;
+  padding: 28px 32px 28px 32px;
+  border-radius: 0 0 16px 16px;
+}
+.instructions-section h3 {
+  font-size: 1.18rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.instructions-columns {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+.instructions-columns > div {
+  min-width: 220px;
+}
+.instructions-section ul {
+  margin: 8px 0 0 0;
+  padding-left: 18px;
+  color: #222;
+  font-size: 1rem;
+}
+.instructions-section li {
+  margin-bottom: 4px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main-card {
+    max-width: 98vw;
+    padding: 18px 4vw 0 4vw;
+  }
+  .instructions-section {
+    padding: 18px 4vw 18px 4vw;
+  }
+  .instructions-columns {
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+/* ExcelUploader drag-and-drop area */
+.excel-drag-area {
+  border: 2px dashed #cfd8e6;
+  border-radius: 12px;
+  background: #fff;
+  width: 100%;
+  min-height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.excel-drag-area.drag-active {
+  border-color: #5b6bff;
+  background: #f3f6fc;
+}
+
+.excel-upload-center {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 0 32px 0;
+}
+
+.excel-upload-icon {
+  background: #f3f6fc;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.excel-upload-title {
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.excel-upload-sub {
+  color: #7b8bbd;
+  font-size: 1rem;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.excel-upload-btn {
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.excel-upload-btn span {
+  background: linear-gradient(90deg, #5b6bff 0%, #8f3fff 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.08rem;
+  border-radius: 8px;
+  padding: 10px 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  transition: background 0.18s;
+}
+.excel-upload-btn span:hover {
+  background: linear-gradient(90deg, #4a5be0 0%, #7a2eea 100%);
+}
+
+.excel-upload-info {
+  color: #7b8bbd;
+  font-size: 0.98rem;
+  margin-top: 2px;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.excel-upload-filename {
+  margin-top: 10px;
+  color: #222;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Excel table wrapper - horizontal scroll if needed */
+.excel-table-wrapper {
+  width: 100%;
+  margin: 32px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-x: auto;
+}
+
+.excel-table {
+  width: 100%;
+  min-width: 900px;
+  max-width: 1150px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(60, 80, 180, 0.08);
+  overflow: hidden;
+  margin-bottom: 0;
+}
+.excel-table th, .excel-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Post Author Link column (narrower) */
+.excel-table th.post-author-link-col,
+.excel-table td.post-author-link-col {
+  max-width: 220px;
+  min-width: 120px;
+}
+
+/* Email column (wider) */
+.excel-table th.email-col,
+.excel-table td.email-col {
+  min-width: 220px;
+  max-width: 260px;
+}
+
+/* Adjust other columns to fit nicely */
+.excel-table th,
+.excel-table td {
+  max-width: 260px;
+}
+
+.excel-table th {
+  background: #f3f6fc;
+  color: #222;
+  font-weight: 600;
+  font-size: 1.05rem;
+  padding: 12px 10px;
+  border-bottom: 1.5px solid #e5eaf3;
+  text-align: left;
+}
+.excel-table td {
+  padding: 10px 10px;
+  font-size: 1rem;
+  border-bottom: 1px solid #f0f2f7;
+  background: #fff;
+  vertical-align: middle;
+}
+.excel-table tr:nth-child(even) td {
+  background: #f7f9fd;
+}
+.excel-table tr:last-child td {
+  border-bottom: none;
+}
+.excel-table-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f8faff;
+  color: #222;
+  transition: border 0.15s, box-shadow 0.15s;
+}
+.excel-table-input:focus {
+  border: 1.5px solid #5b6bff;
+  outline: none;
+  background: #fff;
+}
+.excel-table-input.invalid {
+  border: 1.5px solid #e53935;
+  background: #fff3f3;
+  color: #b30000;
+}
+
+.excel-invalid-msg {
+  margin-top: 18px;
+  color: #b30000;
+  background: #fff3f3;
+  border: 1px solid #ffcccc;
+  border-radius: 6px;
+  padding: 12px 18px;
+  max-width: 680px;
+  font-size: 1rem;
+}
+.excel-invalid-msg ul {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+}
+.excel-invalid-hint {
+  color: #555;
+  margin-top: 8px;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 1300px) {
+  .excel-table {
+    min-width: 700px;
+    max-width: 98vw;
+  }
+}
+
+.excel-upload-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* Add spacing between upload area and table */
+.excel-upload-section > .excel-table-wrapper {
+  margin-top: 24px;
+}
+
+.send-email-btn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 32px 0 18px 0;
+}
+
+.send-email-btn-wrapper button {
+  background: linear-gradient(90deg, #5b6bff 0%, #8f3fff 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.12rem;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 38px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(60, 80, 180, 0.10);
+  transition: background 0.18s, box-shadow 0.18s, opacity 0.18s;
+  outline: none;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.send-email-btn-wrapper button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #4a5be0 0%, #7a2eea 100%);
+  box-shadow: 0 4px 16px rgba(60, 80, 180, 0.13);
+}
+.send-email-btn-wrapper button:disabled {
+  background: #cfd8e6;
+  color: #fff;
+  opacity: 0.7;
+  cursor: not-allowed;
+  box-shadow: none;
+}

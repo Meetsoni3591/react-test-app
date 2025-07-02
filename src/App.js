@@ -3,6 +3,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import GoogleLoginButton from './GoogleLoginButton';
 import ExcelUploader from './ExcelUploader';
 import SendEmailButton from './SendEmailButton';
+import './App.css';
 
 function App() {
   const [emailList, setEmailList] = useState([]);
@@ -62,95 +63,85 @@ function App() {
   //     }
 
   return (
-    
     <GoogleOAuthProvider clientId="223161771777-1ji9dj4v6jguma0s780iqadgia1fqc4c.apps.googleusercontent.com">
-      <div>
-        <h1>Send Mail App</h1>
+      <div className="app-bg">
         {!user ? (
-          <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
-        ) : (
-          <div>
-             <p>Logged in as: {user.email}</p>
-            {/* <h2>Welcome, {user.id}</h2> */}
-            {/* test mail button  */}
-            {/* <button
-              onClick={async () => {
-                try {
-                  const response = await fetch('https://flask-test-app-oumd.onrender.com/send', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ user_id: user.id, email: user.email }),
-                  });
-
-                  const result = await response.json();
-                  console.log("Response from server:", result);
-                  console.log("Email received from backend:", result.email);
-                  if (response.ok) {
-                    alert(`📤 Mail sent to ${result.email} successfully!`);
-                  } else {
-                    alert(`❌ Failed to send mail: ${result.error || 'Unknown error'}`);
-                  }
-                } catch (error) {
-                  console.error("Fetch error:", error);
-                  alert("❌ An error occurred while sending the mail.");
-                }
-              }}
-            >
-              Send Mail
-            </button> */}
-            {/* <br /> */}
-            {/* <br /> */}
-            {/* <p>upload your excel file </p> */}
-           
-            <div>
-              {/* <h2>Gmail Bulk Sender</h2> */}
-              <ExcelUploader onEmailsExtracted={handleEmailsExtracted} onInvalidEmails={handleInvalidEmails} />
-
-              {emailList.length > 0 && (
-                <div>
-                  <h3>Emails to be sent:</h3>
-                  <ul>
-                    {emailList.map((email, index) => (
-                      <li key={index}>{email}</li>
-                    ))}
-                  </ul>
-                  <SendEmailButton emails={emailList} userId={user.id} disabled={invalidEmails.length > 0} />
-                  {invalidEmails.length > 0 && (
-                    <div style={{ color: '#b30000', marginTop: 10 }}>
-                      <strong>Cannot send emails while there are invalid email addresses above.</strong>
-                    </div>
-                  )}
-                </div>
-              )}
-              
-            </div>
-            {/* <div>
-              <h2>LinkedIn Cookie Validator & Post Scraper</h2>
-              <label>li_at Cookie:</label><br>
-              </br>
-              <input type="text" id="liat" placeholder="Paste li_at cookie" size="80"/><br />
-              <button onclick={checkCookie()}>Check Cookie</button>
-              <p id="cookie-result"></p>
-
-              <hr />
-              <label>Search Keyword:</label><br />
-              <input type="text" id="keyword" placeholder="e.g. AI, startup, hiring" size="50" />
-              <button onclick={scrapePosts()}>Scrape Posts</button>
-              <p id="scrape-result"></p>
-              <ul id="posts"></ul>
+          <div className="login-card">
+            {/* <div className="login-icon">
+              <img src={require('./logo.svg').default} alt="Mail Icon" style={{ width: 56, height: 56 }} />
             </div> */}
+            <h2 className="login-title">Send Mail App</h2>
+            <p className="login-subtitle">Sign in to your account to continue</p>
+            <div className="login-btn-wrapper">
+              <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
+            </div>
+            {/* <div className="login-signup">
+              Don't have an account? <a href="#" className="signup-link">Sign up for free</a>
+            </div> */}
+            <div className="login-footer">
+              Protected by industry-standard encryption and security measures
+            </div>
+          </div>
+        ) : (
+          <div className="dashboard-bg">
+            {/* Top Navbar */}
+            <nav className="navbar">
+              <div className="navbar-left">
+                <span className="navbar-logo">
+                  <img src={require('./logo.svg').default} alt="Mail Icon" style={{ width: 32, height: 32 }} />
+                </span>
+                <span className="navbar-title">Send Mail App</span>
+              </div>
+              <div className="navbar-right">
+                <span className="navbar-user">
+                  <span className="navbar-user-icon" role="img" aria-label="user">👤</span>
+                  Logged in as: <b>{user.email}</b>
+                </span>
+                <button className="navbar-logout" onClick={() => {
+                  localStorage.removeItem('gmail_user');
+                  localStorage.clear();
+                  window.location.reload();
+                  setUser(null);
+                }}>
+                  <span role="img" aria-label="logout">↩️</span> Logout
+                </button>
+              </div>  
+            </nav>
 
-
-            <button onClick={() => {
-              localStorage.removeItem('gmail_user');
-              localStorage.clear(); // or clear tokens
-              window.location.reload(); // reset session
-              setUser(null);
-            }}>
-              Logout
-            </button>
+            {/* Main Card */}
+            <div className="main-card">
+              <h2 className="main-title">Upload Excel File</h2>
+              <p className="main-subtitle">Upload your Excel file containing email addresses to send bulk emails</p>
+              <div className="upload-area">
+                <ExcelUploader onEmailsExtracted={handleEmailsExtracted} onInvalidEmails={handleInvalidEmails} />
+              </div>
+              <div className="send-email-btn-wrapper">
+                <SendEmailButton emails={emailList} userId={user.id} disabled={invalidEmails.length > 0 || emailList.length === 0} />
+              </div>
+              <div className="instructions-section">
+                <h3>Instructions</h3>
+                <div className="instructions-columns">
+                  <div>
+                    <b>Excel File Format</b>
+                    <ul>
+                      <li>Include email addresses in the first column</li>
+                      {/* <li>Add recipient names in the second column (optional)</li> */}
+                      <li>Use .xlsx or .xls format</li>
+                      <li>Maximum file size: 10MB</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <b>Email Sending</b>
+                    <ul>
+                      <li>Bulk emails will be sent from your account</li>
+                      <li>Processing time depends on list size</li>
+                      <li>You'll receive a confirmation when complete</li>
+                      {/* <li>Check spam folder for delivery reports</li> */}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         )}
       </div>
