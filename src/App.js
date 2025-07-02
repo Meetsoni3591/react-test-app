@@ -124,7 +124,7 @@ function App() {
                   <div>
                     <b>Excel File Format</b>
                     <ul>
-                      <li>Include email addresses in the first column</li>
+                      <li>Include email addresses in the Last column</li>
                       {/* <li>Add recipient names in the second column (optional)</li> */}
                       <li>Use .xlsx or .xls format</li>
                       <li>Maximum file size: 10MB</li>
